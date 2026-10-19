@@ -69,4 +69,4 @@ Feature list: `DAILY_FEATURE_COLUMNS` in labels.py. Catalog: `CATALOGUED_GEARBOX
 
 ## Key commit
 
-Pending push — Monday RUL labels + LOFO baselines.
+`bc30059` — gearbox RUL labels, LOFO baselines, Monday docs and tests.
