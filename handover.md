@@ -1,8 +1,8 @@
 # handover.md
 
-**Last updated:** 2026-10-18
+**Last updated:** 2026-10-21
 
-Monday slice: RUL target, daily label builder, and leave-one-failure-out baselines. Remote: [grid-gnn-faults-2](https://github.com/mehmetertac/grid-gnn-faults-2). Upstream twin: [wind-digital-twin](https://github.com/mehmetertac/wind-digital-twin).
+Tuesday slice: LightGBM quantile RUL (q10/q50/q90) on Monday features, LOFO scoring, band figures, P10 warning lead time. Remote: [grid-gnn-faults-2](https://github.com/mehmetertac/grid-gnn-faults-2). Upstream twin: [wind-digital-twin](https://github.com/mehmetertac/wind-digital-twin).
 
 ---
 
@@ -11,17 +11,20 @@ Monday slice: RUL target, daily label builder, and leave-one-failure-out baselin
 | Item | Status |
 |------|--------|
 | Git remote `origin` → grid-gnn-faults-2 | Done |
-| [docs/RUL_DESIGN.md](docs/RUL_DESIGN.md) — 90-day C-MAPSS cap, 4 events, LOFO | Done |
-| [docs/WEEK_11_TODO.md](docs/WEEK_11_TODO.md) — Monday items checked | Done |
+| [docs/RUL_DESIGN.md](docs/RUL_DESIGN.md) — 90-day cap, quantile model, P10 warning table | Done |
+| [docs/WEEK_11_TODO.md](docs/WEEK_11_TODO.md) — Monday + Tuesday quantile checked | Done |
 | [src/rul/labels.py](src/rul/labels.py) — daily aggregates + capped labels | Done |
 | [src/rul/evaluate.py](src/rul/evaluate.py) — constant/linear baselines, LOFO metrics | Done |
-| [tests/](tests/) — labels, evaluate, file-size smoke | Done |
+| [src/rul/quantile.py](src/rul/quantile.py) — LightGBM q10/q50/q90, PDP, coverage vs 80% | Done |
+| [src/rul/plots.py](src/rul/plots.py) — true RUL vs P50 + P10–P90 band PNGs | Done |
+| [scripts/evaluate_quantile_rul.py](scripts/evaluate_quantile_rul.py) — LOFO CLI + reports | Done |
+| [tests/](tests/) — labels, evaluate, quantile, file-size smoke | Done |
 | Pre-commit: file size + pytest | Done |
-| Quantile model, conformal, SHAP, GNN notebook | Not started |
+| Conformal (MAPIE), SHAP, GNN notebook | Not started |
 
-### Test run (2026-10-18)
+### Test run (2026-10-21)
 
-`pytest tests/ -q` — 15 passed. `python scripts/check_file_size.py` — OK.
+`pytest tests/ -q` — 22 passed. `python scripts/check_file_size.py` — OK.
 
 ---
 
@@ -36,12 +39,18 @@ grid-gnn-faults-2/
 │   └── WEEK_11_TODO.md
 ├── src/rul/
 │   ├── labels.py
-│   └── evaluate.py
-├── scripts/check_file_size.py
+│   ├── evaluate.py
+│   ├── quantile.py
+│   └── plots.py
+├── scripts/
+│   ├── check_file_size.py
+│   └── evaluate_quantile_rul.py
 └── tests/
+    ├── conftest.py
     ├── fixtures/
     ├── test_labels.py
     ├── test_evaluate.py
+    ├── test_quantile.py
     └── test_check_file_size.py
 ```
 
@@ -56,6 +65,8 @@ grid-gnn-faults-2/
 | `summarize_events` | labels.py | Count events in a failure CSV |
 | `leave_one_failure_out` | [evaluate.py](src/rul/evaluate.py) | One fold per gearbox event |
 | `evaluate_baselines` | evaluate.py | Constant + linear anomaly on every fold |
+| `evaluate_quantile_model` | [quantile.py](src/rul/quantile.py) | LOFO LightGBM quantiles + coverage detail |
+| `write_all_band_figures` | [plots.py](src/rul/plots.py) | Headline RUL band PNG per held-out event |
 
 Feature list: `DAILY_FEATURE_COLUMNS` in labels.py. Catalog: `CATALOGUED_GEARBOX_EVENTS` (4 lines, 3 turbines).
 
@@ -63,10 +74,10 @@ Feature list: `DAILY_FEATURE_COLUMNS` in labels.py. Catalog: `CATALOGUED_GEARBOX
 
 ## Suggested next step
 
-**Tuesday:** add `src/rul/quantile.py` and score q10/q50/q90 on the same LOFO split — no second evaluation protocol. Export a fleet scored CSV from wind-digital-twin without refitting the thermal stack.
+**Wednesday:** add MAPIE conformal intervals on the same LOFO split (CQR on q10/q50/q90). Export a fleet scored CSV from wind-digital-twin and fill the P10 warning table in [docs/RUL_DESIGN.md](docs/RUL_DESIGN.md).
 
 ---
 
 ## Key commit
 
-`bc30059` — gearbox RUL labels, LOFO baselines, Monday docs and tests.
+`db89ca0` — LightGBM quantile RUL, LOFO CLI, band figures, docs and tests.

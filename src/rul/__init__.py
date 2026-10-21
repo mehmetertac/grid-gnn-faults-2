@@ -13,7 +13,6 @@ from rul.labels import (
     daily_from_scored_frame,
     summarize_events,
 )
-
 __all__ = [
     "RUL_MAX_DAYS",
     "attach_rul_labels",

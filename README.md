@@ -20,7 +20,7 @@ Optional hooks:
 pre-commit install
 ```
 
-## Monday deliverable (RUL labels + baselines)
+## RUL labels, baselines, and quantile model
 
 Design contract: [docs/RUL_DESIGN.md](docs/RUL_DESIGN.md). Week checklist: [docs/WEEK_11_TODO.md](docs/WEEK_11_TODO.md).
 
@@ -30,6 +30,7 @@ From Python (after you have a 10-minute **scored** CSV from the twin — do not 
 import pandas as pd
 from rul.labels import daily_from_scored_frame, attach_rul_labels, summarize_events
 from rul.evaluate import evaluate_baselines
+from rul.quantile import evaluate_quantile_model
 
 scored = pd.read_csv("path/to/scored_10min.csv")
 failures = pd.read_csv("path/to/gearbox_log.csv")
@@ -38,6 +39,13 @@ print(summarize_events(failures))  # catalog expects 4 gearbox events
 daily = daily_from_scored_frame(scored)
 labeled = attach_rul_labels(daily, failures)
 metrics = evaluate_baselines(labeled)
+quantile_metrics, coverage, warnings, folds = evaluate_quantile_model(labeled)
+```
+
+Leave-one-failure-out quantile evaluation and headline band figures:
+
+```powershell
+python scripts/evaluate_quantile_rul.py --scored path/to/scored_10min.csv --failures path/to/gearbox_log.csv --out reports/rul
 ```
 
 Required scored columns: `oil_residual`, `bear_residual`, `anomaly_score`, `theta_oil`, `theta_bear`, `delta_bear_oil`, `turbine_id`, `timestamp`.
