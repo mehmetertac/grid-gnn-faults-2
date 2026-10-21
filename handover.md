@@ -80,4 +80,4 @@ Feature list: `DAILY_FEATURE_COLUMNS` in labels.py. Catalog: `CATALOGUED_GEARBOX
 
 ## Key commit
 
-`db89ca0` — LightGBM quantile RUL, LOFO CLI, band figures, docs and tests.
+`b47445a` — LightGBM quantile RUL, LOFO CLI, band figures, docs and tests.
