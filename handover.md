@@ -88,4 +88,4 @@ Feature list: `DAILY_FEATURE_COLUMNS` in labels.py. Catalog: `CATALOGUED_GEARBOX
 
 ## Key commit
 
-`e96ea79` — MAPIE conformal RUL, twin `run_twin.py`, coverage reports, docs and tests.
+`5bcf5d7` — MAPIE conformal RUL, twin `run_twin.py`, coverage reports, docs and tests.
