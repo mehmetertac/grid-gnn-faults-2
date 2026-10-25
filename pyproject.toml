@@ -13,6 +13,7 @@ dependencies = [
   "numpy>=1.24",
   "lightgbm>=4.0",
   "matplotlib>=3.7",
+  "mapie>=1.0",
 ]
 
 [project.optional-dependencies]

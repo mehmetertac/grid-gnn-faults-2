@@ -42,17 +42,23 @@ metrics = evaluate_baselines(labeled)
 quantile_metrics, coverage, warnings, folds = evaluate_quantile_model(labeled)
 ```
 
-Leave-one-failure-out quantile evaluation and headline band figures:
+Leave-one-failure-out quantile evaluation, conformal coverage tables, and headline band figures:
 
 ```powershell
 python scripts/evaluate_quantile_rul.py --scored path/to/scored_10min.csv --failures path/to/gearbox_log.csv --out reports/rul
+```
+
+End-to-end twin with conformal RUL (requires `pip install -e path/to/wind-digital-twin`):
+
+```powershell
+python scripts/run_twin.py --turbine T06 --out reports/twin
 ```
 
 Required scored columns: `oil_residual`, `bear_residual`, `anomaly_score`, `theta_oil`, `theta_bear`, `delta_bear_oil`, `turbine_id`, `timestamp`.
 
 ## What this means for maintenance (O&M)
 
-A capped RUL is an **inspection planning window**, not a guaranteed failure date. When daily hybrid residuals and the anomaly score trend toward the held-out failure pattern, operations can prioritize gearbox oil, bearing temperatures, and log review within the 90-day horizon Week 10 already uses as a training buffer. With **four** catalogued gearbox events in the EDP log, probabilistic bands and leave-one-failure-out scores describe what the twin can support on those run-to-failure windows — not fleet-wide calendar certainty.
+A capped RUL is an **inspection planning window**, not a guaranteed failure date. When daily hybrid residuals and the anomaly score trend toward the held-out failure pattern, operations can prioritize gearbox oil, bearing temperatures, and log review within the 90-day horizon Week 10 already uses as a training buffer. With **four** catalogued gearbox events in the EDP log, probabilistic bands and leave-one-failure-out scores describe what the twin can support on those run-to-failure windows — not fleet-wide calendar certainty. Conformal (CQR) intervals widen the raw quantile band using a small calibration tail; coverage guarantees are **marginal** and the calibration set is tiny — gaps versus 80%/90% nominal are expected, not a reason to over-tune.
 
 ## Roadmap (same repo)
 
