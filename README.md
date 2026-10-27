@@ -64,6 +64,19 @@ python scripts/run_twin.py --turbine T06 --out reports/twin
 
 Required scored columns: `oil_residual`, `bear_residual`, `anomaly_score`, `theta_oil`, `theta_bear`, `delta_bear_oil`, `turbine_id`, `timestamp`.
 
+## Twin deployment (FastAPI + Streamlit)
+
+Serving lives in [wind-digital-twin/service](https://github.com/mehmetertac/wind-digital-twin/tree/main/service) (Week 10 physics unchanged here). Models load from `service/models/` at startup.
+
+| Endpoint | Role |
+| --- | --- |
+| `POST /twin/score` | SCADA window → physics-expected oil temp, hybrid residual, anomaly score |
+| `POST /twin/rul` | Daily features → P10/P50/P90, CQR band, top-five **P10** sensor attributions |
+
+Streamlit dashboard: three timeline panels plus global P10 SHAP bar; scrub the failure window on T01/T06. Run instructions and figures: [wind-digital-twin README — Deployment dashboard](https://github.com/mehmetertac/wind-digital-twin#deployment-dashboard-week-11).
+
+Week 11 write-up: [WEEK_11_REFLECTION.md](WEEK_11_REFLECTION.md).
+
 ## What this means for maintenance (O&M)
 
 A capped RUL is an **inspection planning window**, not a guaranteed failure date. When daily hybrid residuals and the anomaly score trend toward the held-out failure pattern, operations can prioritize gearbox oil, bearing temperatures, and log review within the 90-day horizon Week 10 already uses as a training buffer. With **four** catalogued gearbox events in the EDP log, probabilistic bands and leave-one-failure-out scores describe what the twin can support on those run-to-failure windows — not fleet-wide calendar certainty. Conformal (CQR) intervals widen the raw quantile band using a small calibration tail; coverage guarantees are **marginal** and the calibration set is tiny — gaps versus 80%/90% nominal are expected, not a reason to over-tune.
@@ -72,7 +85,7 @@ A capped RUL is an **inspection planning window**, not a guaranteed failure date
 
 | Track | Scope |
 |-------|--------|
-| **B — RUL** | Quantile LightGBM, conformal intervals, TreeSHAP (`src/rul/explain.py`), twin API (Thu) |
+| **B — RUL** | Quantile LightGBM, conformal intervals, TreeSHAP, twin API + dashboard (wind-digital-twin) |
 | **C — Grid** | One notebook: torch-geometric + pandapower fault localization on IEEE 39-bus |
 
 ## License

@@ -1,8 +1,8 @@
 # handover.md
 
-**Last updated:** 2026-10-26
+**Last updated:** 2026-10-27
 
-Thursday slice (partial): TreeSHAP on P10/P50 LOFO quantile RUL, sensor-level ranking CSV, global/local SHAP figures. Remote: [grid-gnn-faults-2](https://github.com/mehmetertac/grid-gnn-faults-2). Upstream twin: [wind-digital-twin](https://github.com/mehmetertac/wind-digital-twin).
+Week 11 RUL + SHAP complete; twin **FastAPI + Streamlit** served from [wind-digital-twin/service](https://github.com/mehmetertac/wind-digital-twin/tree/main/service). Remote: [grid-gnn-faults-2](https://github.com/mehmetertac/grid-gnn-faults-2). Upstream twin: [wind-digital-twin](https://github.com/mehmetertac/wind-digital-twin).
 
 ---
 
@@ -12,7 +12,8 @@ Thursday slice (partial): TreeSHAP on P10/P50 LOFO quantile RUL, sensor-level ra
 |------|--------|
 | Git remote `origin` → grid-gnn-faults-2 | Done |
 | [docs/RUL_DESIGN.md](docs/RUL_DESIGN.md) — quantile + conformal CQR, coverage caveat, P10 warning table, TreeSHAP section | Done |
-| [docs/WEEK_11_TODO.md](docs/WEEK_11_TODO.md) — Monday–Wednesday RUL + SHAP checked | Done |
+| [docs/WEEK_11_TODO.md](docs/WEEK_11_TODO.md) — RUL, SHAP, deployment, reflection checked | Done |
+| [WEEK_11_REFLECTION.md](WEEK_11_REFLECTION.md) — label/conformal/survival/CMS notes | Done |
 | [docs/EXPLANATIONS.md](docs/EXPLANATIONS.md) — sensor map, outputs, field-intuition template | Done |
 | [src/rul/labels.py](src/rul/labels.py) — daily aggregates + capped labels | Done |
 | [src/rul/evaluate.py](src/rul/evaluate.py) — constant/linear baselines, LOFO metrics | Done |
@@ -23,11 +24,12 @@ Thursday slice (partial): TreeSHAP on P10/P50 LOFO quantile RUL, sensor-level ra
 | [scripts/evaluate_quantile_rul.py](scripts/evaluate_quantile_rul.py) — LOFO CLI + conformal reports | Done |
 | [scripts/explain_rul.py](scripts/explain_rul.py) — SHAP CLI → `results/` | Done |
 | [scripts/run_twin.py](scripts/run_twin.py) — SCADA → conformal RUL turbine-day CSV + timeline | Done |
+| Twin deployment UI ([wind-digital-twin/service](https://github.com/mehmetertac/wind-digital-twin/tree/main/service)) | Done |
 | [tests/](tests/) — labels, evaluate, quantile, conformal, explain, file-size smoke | Done |
 | Pre-commit: file size + pytest | Done |
-| Twin deployment UI, GNN notebook | Not started |
+| IEEE 39-bus GNN notebook | Not started |
 
-### Test run (2026-10-26)
+### Test run (2026-10-27)
 
 `pytest tests/ -q` — 34 passed. `python scripts/check_file_size.py` — OK.
 
@@ -38,6 +40,7 @@ Thursday slice (partial): TreeSHAP on P10/P50 LOFO quantile RUL, sensor-level ra
 ```
 grid-gnn-faults-2/
 ├── handover.md
+├── WEEK_11_REFLECTION.md
 ├── AGENT.md
 ├── docs/
 │   ├── RUL_DESIGN.md
@@ -69,6 +72,8 @@ grid-gnn-faults-2/
     └── test_check_file_size.py
 ```
 
+Deployment (sibling repo): `wind-digital-twin/service/` — FastAPI, Streamlit, Docker, CI, `docs/figures/twin_dashboard.{png,gif}`.
+
 ---
 
 ## Core module API
@@ -94,10 +99,10 @@ Feature list: `DAILY_FEATURE_COLUMNS` in labels.py. Catalog: `CATALOGUED_GEARBOX
 
 ## Suggested next step
 
-**Thursday (remaining):** Streamlit/FastAPI twin view, IEEE 39-bus GNN notebook. Re-run `scripts/explain_rul.py` on a fleet scored CSV from wind-digital-twin (T06 hold-out) and refresh the field-intuition paragraph in [docs/EXPLANATIONS.md](docs/EXPLANATIONS.md). Fill the P10 warning table in [docs/RUL_DESIGN.md](docs/RUL_DESIGN.md).
+**Grid track:** IEEE 39-bus GNN fault-localization notebook. **Twin:** re-run `scripts/explain_rul.py` on a fleet scored CSV from wind-digital-twin (T06 hold-out), refresh [docs/EXPLANATIONS.md](docs/EXPLANATIONS.md), and fill the P10 warning table in [docs/RUL_DESIGN.md](docs/RUL_DESIGN.md). Re-export `wind-digital-twin/service/models/` after real EDP download.
 
 ---
 
 ## Key commit
 
-`186d7ff` — TreeSHAP explain module, bundle persistence, `results/shap_sensor_ranking.csv`, tests and docs.
+`d626cf3` — Week 11 reflection, deployment doc links (prior: `186d7ff` TreeSHAP explain module).
