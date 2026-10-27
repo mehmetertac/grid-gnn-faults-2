@@ -157,9 +157,13 @@ Use the **pessimistic** quantile: the first calendar day in the held-out window 
 
 Replace em dashes with integers from `warnings.csv` after running the CLI on a twin scored export. Example sentence for interviews: *The twin would have given the O&M planner X days of warning before the gearbox event on T06.*
 
+### TreeSHAP explanations
+
+Implementation: [src/rul/explain.py](../src/rul/explain.py), [docs/EXPLANATIONS.md](EXPLANATIONS.md). TreeSHAP on P10 and P50 LOFO boosters; feature attributions summed to six sensor groups; `results/shap_sensor_ranking.csv` for the deployment UI.
+
 ### Later days (not implemented yet)
 
-- **Thursday:** TreeSHAP explanations, twin deployment, IEEE 39-bus GNN fault-localization notebook.
+- **Thursday:** Twin deployment (Streamlit/FastAPI), IEEE 39-bus GNN fault-localization notebook.
 
 ## What this means for maintenance
 

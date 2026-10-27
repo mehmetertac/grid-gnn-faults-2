@@ -19,7 +19,10 @@ Week 10 physics, the learned residual, and the hybrid-residual detector live in 
 | [src/rul/quantile.py](src/rul/quantile.py) | LightGBM q10/q50/q90, PDP on anomaly score, P10 lead time |
 | [src/rul/conformal.py](src/rul/conformal.py) | MAPIE CQR 80%/90%, LOFO calibration split, deployment predict |
 | [src/rul/plots.py](src/rul/plots.py) | RUL band overlays + twin timeline figure |
+| [src/rul/explain.py](src/rul/explain.py) | TreeSHAP global/local figures and `shap_sensor_ranking.csv` |
+| [docs/EXPLANATIONS.md](docs/EXPLANATIONS.md) | Sensor map, CSV schema, field-intuition notes |
 | [scripts/evaluate_quantile_rul.py](scripts/evaluate_quantile_rul.py) | LOFO quantile + conformal CLI → `reports/rul/` |
+| [scripts/explain_rul.py](scripts/explain_rul.py) | Fit/load bundle → SHAP figures under `results/` |
 | [scripts/run_twin.py](scripts/run_twin.py) | End-to-end twin → turbine-day CSV + timeline PNG |
 | [wind-digital-twin](https://github.com/mehmetertac/wind-digital-twin) | Week 10 twin: ODE, hybrid residual, anomaly score, gearbox log |
 

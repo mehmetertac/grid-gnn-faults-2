@@ -9,3 +9,7 @@ build/
 .vscode/
 reports/
 results/
+!results/shap_sensor_ranking.csv
+!results/figures/
+!results/figures/shap_global.png
+!results/figures/shap_local_timeline.png

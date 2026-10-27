@@ -42,6 +42,14 @@ metrics = evaluate_baselines(labeled)
 quantile_metrics, coverage, warnings, folds = evaluate_quantile_model(labeled)
 ```
 
+TreeSHAP sensor explanations (global beeswarm + local timeline, ranking CSV for the twin UI):
+
+```powershell
+python scripts/explain_rul.py --labeled path/to/daily_labeled.csv --out results
+```
+
+See [docs/EXPLANATIONS.md](docs/EXPLANATIONS.md).
+
 Leave-one-failure-out quantile evaluation, conformal coverage tables, and headline band figures:
 
 ```powershell
@@ -64,7 +72,7 @@ A capped RUL is an **inspection planning window**, not a guaranteed failure date
 
 | Track | Scope |
 |-------|--------|
-| **B — RUL** | Quantile LightGBM, conformal intervals, SHAP, twin API (Tue–Thu) |
+| **B — RUL** | Quantile LightGBM, conformal intervals, TreeSHAP (`src/rul/explain.py`), twin API (Thu) |
 | **C — Grid** | One notebook: torch-geometric + pandapower fault localization on IEEE 39-bus |
 
 ## License
