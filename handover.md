@@ -100,4 +100,4 @@ Feature list: `DAILY_FEATURE_COLUMNS` in labels.py. Catalog: `CATALOGUED_GEARBOX
 
 ## Key commit
 
-Pending — TreeSHAP explain module, bundle persistence, `results/shap_sensor_ranking.csv`, tests and docs.
+`186d7ff` — TreeSHAP explain module, bundle persistence, `results/shap_sensor_ranking.csv`, tests and docs.
