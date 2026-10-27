@@ -105,4 +105,4 @@ Feature list: `DAILY_FEATURE_COLUMNS` in labels.py. Catalog: `CATALOGUED_GEARBOX
 
 ## Key commit
 
-`d626cf3` — Week 11 reflection, deployment doc links (prior: `186d7ff` TreeSHAP explain module).
+`3d57bd6` — Week 11 reflection, deployment doc links (prior: `186d7ff` TreeSHAP explain module).
